@@ -56,7 +56,7 @@ ev_total |>
   coord_cartesian(clip = 'off')  # Permite dados além dos limites do gráfico (seta,p.ex.)
 
 ggsave(
-  "figs/stm_evoldefenses.png",
+  "figs/fig1.png",
   bg = "white",
   width = 8,
   height = 6,
@@ -183,7 +183,7 @@ k_result |>
         text = element_text(size = 25, family = "Times New Roman"))
 
 ggsave(
-  "figs/stm_diagnostico.png",
+  "figs/figA.png",
   bg = "white",
   width = 10,
   height = 8,
@@ -483,29 +483,6 @@ stm_ano <- stm_ano |>
   left_join(topic_labels, by = "topic") |> 
   filter(!str_detect(labels, "Excluded")) |> 
   mutate(labels = factor(labels, levels = ordem_labels))
-
-# Gráfico Efeito ano-tópicos####
-stm_ano |> 
-  filter(labels == "MARX") |> 
-  ggplot(aes(x = covariate.value,
-             y = estimate,
-             ymin = ci.lower, 
-             ymax = ci.upper, # Sem CI em função da resolução do gráfico
-             color = category)) +
-  facet_wrap(~labels, ncol = 6) +
-  theme_classic() +
-  geom_line(linewidth = 1, aes(color = category)) +
-  geom_ribbon(aes(fill = category), 
-              alpha = 0.2,
-              show.legend = FALSE) +
-  labs(x = "Year (1991-2021)",
-       y = "Point Estimation",
-       color = "") +
-  scale_color_manual(values = met.brewer("Cross", 7)) +
-  theme(legend.position = "top",
-        text = element_text(size = 6, family = "Times New Roman"),
-        axis.text.x = element_blank(),
-        legend.text = element_text(size=8))
 
 # Gráfico ano-tópicos por categoria#### 
 stm_ano |> 
